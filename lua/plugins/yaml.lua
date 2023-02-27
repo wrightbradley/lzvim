@@ -18,7 +18,6 @@ return {
                 url = "https://www.schemastore.org/api/json/catalog.json",
               },
               schemas = {
-                kubernetes = "*.yaml",
                 ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
                 ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
                 ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
@@ -31,6 +30,7 @@ return {
                 ["https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.1/schema.json"] = "*api*.{yml,yaml}",
                 ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*docker-compose*.{yml,yaml}",
                 ["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] = "*flow*.{yml,yaml}",
+                -- kubernetes = "*.yaml",
               },
               hover = true,
               completion = true,
@@ -40,5 +40,27 @@ return {
         },
       },
     },
+  },
+  {
+    "someone-stole-my-name/yaml-companion.nvim",
+    requires = {
+      { "neovim/nvim-lspconfig" },
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-telescope/telescope.nvim" },
+    },
+    config = function()
+      require("telescope").load_extension("yaml_schema")
+      local cfg = require("yaml-companion").setup({
+        -- Add any options here, or leave empty to use the default settings
+        -- Additional schemas available in Telescope picker
+        schemas = {
+          {
+            name = "Kubernetes 1.22.4",
+            uri = "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.22.4-standalone-strict/all.json",
+          },
+        },
+      })
+      require("lspconfig")["yamlls"].setup(cfg)
+    end,
   },
 }
