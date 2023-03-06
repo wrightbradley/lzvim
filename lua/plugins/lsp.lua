@@ -38,12 +38,12 @@ return {
       local diagnostics = {
         -- The linter that needs to be added is loaded here
         nls_diagnostics.golangci_lint.with(require("plugins.extras.lsp.null-ls.diagnostics.golangci_lint")),
-        nls_diagnostics.buf.with(require("plugins.extras.lsp.null-ls.diagnostics.buf")),
+        -- nls_diagnostics.buf.with(require("plugins.extras.lsp.null-ls.diagnostics.buf")),
       }
       local formatting = {
         -- The formatter that needs to be added is loaded here
         nls_formatting.goimports.with(require("plugins.extras.lsp.null-ls.formatting.goimports")),
-        nls_formatting.buf.with(require("plugins.extras.lsp.null-ls.formatting.buf")),
+        -- nls_formatting.buf.with(require("plugins.extras.lsp.null-ls.formatting.buf")),
       }
       if type(opts.sources) == "table" then
         opts.sources = vim.list_extend(opts.sources, diagnostics)
@@ -58,7 +58,7 @@ return {
       local server_opts = {
         -- The LSP server configuration that needs to be configured is loaded here
         gopls = require("plugins.extras.lsp.server.gopls"),
-        bufls = require("plugins.extras.lsp.server.bufls"),
+        -- bufls = require("plugins.extras.lsp.server.bufls"),
         -- clangd = require("plugins.extras.lsp.server.clangd"),
       }
       if type(opts.servers) == "table" then
