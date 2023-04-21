@@ -42,8 +42,9 @@ return {
       }
       local formatting = {
         -- The formatter that needs to be added is loaded here
-        nls_formatting.goimports.with(require("plugins.extras.lsp.null-ls.formatting.goimports")),
         -- nls_formatting.buf.with(require("plugins.extras.lsp.null-ls.formatting.buf")),
+        nls_formatting.goimports.with(require("plugins.extras.lsp.null-ls.formatting.goimports")),
+        nls_formatting.gofumpt,
       }
       if type(opts.sources) == "table" then
         opts.sources = vim.list_extend(opts.sources, diagnostics)
