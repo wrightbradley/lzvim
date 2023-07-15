@@ -1,0 +1,5 @@
+return {
+  {
+    "pgavlin/pulumi.vim",
+  },
+}
