@@ -27,6 +27,7 @@ return {
   "sqls",
   "lua-language-server",
   -- "taplo",
+  "tflint",
   "terraform-ls",
   "typescript-language-server",
   "vim-language-server",

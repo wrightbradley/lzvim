@@ -1,41 +1,35 @@
--- every spec file under config.plugins will be loaded automatically by lazy.nvim
---
--- In your plugin files, you can:
--- * add extra plugins
--- * disable/enabled LazyVim plugins
--- * override the configuration of LazyVim plugins
 return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
-      -- add hcl
-      vim.list_extend(opts.ensure_installed, {
-        "hcl",
-      })
+      if type(opts.ensure_installed) == "table" then
+        vim.list_extend(opts.ensure_installed, {
+          "terraform",
+          "hcl",
+        })
+      end
     end,
   },
-  -- add any tools you want to have installed below
-  -- {
-  --   "williamboman/mason.nvim",
-  --   opts = {
-  --     ensure_installed = {
-  --       "terraformls",
-  --       "tflint",
-  --     },
-  --   },
-  -- },
-  -- add terraformls to lspconfig
-  -- add tflint to lspconfig
   {
     "neovim/nvim-lspconfig",
-    ---@class PluginLspOpts
     opts = {
-      ---@type lspconfig.options
       servers = {
         terraformls = {},
         tflint = {},
       },
     },
+  },
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    opts = function(_, opts)
+      if type(opts.sources) == "table" then
+        local null_ls = require("null-ls")
+        vim.list_extend(opts.sources, {
+          null_ls.builtins.formatting.terraform_fmt,
+          null_ls.builtins.diagnostics.terraform_validate,
+        })
+      end
+    end,
   },
   {
     "hashivim/vim-terraform",
