@@ -1,0 +1,18 @@
+{
+  "name": "custom-snippets",
+  "engines": {
+    "vscode": "^1.11.0"
+  },
+  "contributes": {
+    "snippets": [
+      {
+        "language": "yaml",
+        "path": "./snippets/kubernetes.json"
+      },
+      {
+        "language": "yaml",
+        "path": "./snippets/kustomize.json"
+      }
+    ]
+  }
+}
