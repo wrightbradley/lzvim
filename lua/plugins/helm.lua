@@ -1,13 +1,10 @@
 return {
   {
-    "towolf/vim-helm",
+    "mrjosh/helm-ls",
     dependencies = { -- optional packages
-      "mrjosh/helm-ls",
+      "towolf/vim-helm",
     },
   },
-  -- {
-  --   "mrjosh/helm-ls",
-  -- },
   {
     "neovim/nvim-lspconfig",
     opts = {
