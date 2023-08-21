@@ -29,5 +29,6 @@ vim.api.nvim_create_autocmd("BufRead,BufNewFile", {
   callback = function()
     vim.bo.filetype = "helm"
     vim.bo.commentstring = "{{/* %s */}}"
+    vim.cmd("LspStop yamlls")
   end,
 })
