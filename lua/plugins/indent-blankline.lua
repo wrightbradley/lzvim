@@ -1,0 +1,56 @@
+vim.opt.list = true
+vim.opt.listchars:append("space:⋅,tab:│ ")
+return {
+  -- indent guides for Neovim
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    event = { "BufReadPost", "BufNewFile" },
+    branch = "v3",
+    config = function()
+      local highlight = {
+        "RainbowRed",
+        "RainbowYellow",
+        "RainbowBlue",
+        "RainbowOrange",
+        "RainbowGreen",
+        "RainbowViolet",
+        "RainbowCyan",
+      }
+      vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
+      vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
+      vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
+      vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
+      vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
+      vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
+      vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
+      require("ibl").setup({
+        indent = {
+          char = "│",
+          highlight = highlight,
+          -- char = ">",
+        },
+        scope = {
+          exclude = {
+            filetypes = {
+              "help",
+              "alpha",
+              "dashboard",
+              "neo-tree",
+              "Trouble",
+              "lazy",
+              "mason",
+              "notify",
+              "toggleterm",
+              "lazyterm",
+            },
+          },
+        },
+        show_current_context = true,
+        show_current_context_start = true,
+        show_trailing_blankline_indent = false,
+        space_char_blankline = " ",
+        use_treesitter_scope = true,
+      })
+    end,
+  },
+}

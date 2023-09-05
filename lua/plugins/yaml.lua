@@ -16,7 +16,7 @@ return {
     opts = {
       setup = {
         yamlls = function()
-          require("lazyvim.util").on_attach(function(client, bufnr)
+          require("util").on_attach(function(client, bufnr)
             if client.name == "yamlls" and vim.bo.filetype == "helm" then
               vim.lsp.stop_client(bufnr, client.id)
             end
