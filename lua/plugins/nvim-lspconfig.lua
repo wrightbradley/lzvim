@@ -1,5 +1,4 @@
 return {
-  -- lspconfig
   {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
@@ -13,6 +12,10 @@ return {
         cond = function()
           return require("util").has("nvim-cmp")
         end,
+      },
+      {
+        "b0o/SchemaStore.nvim",
+        version = false, -- last release is way too old
       },
     },
     ---@class PluginLspOpts
@@ -54,6 +57,29 @@ return {
       -- LSP Server Settings
       ---@type lspconfig.options
       servers = {
+        helm_ls = {},
+        eslint = {
+          settings = {
+            -- helps eslint find the eslintrc when it's placed in a subfolder instead of the cwd root
+            workingDirectory = { mode = "auto" },
+          },
+        },
+        ruff_lsp = {},
+        pylsp = {
+          settings = {
+            pylsp = {
+              plugins = {
+                pyflakes = { enabled = false },
+                pycodestyle = {
+                  maxLineLength = 119,
+                },
+                flake8 = {
+                  maxLineLength = 119,
+                },
+              },
+            },
+          },
+        },
         jsonls = {},
         lua_ls = {
           -- mason = false, -- set to false if you don't want this server to be installed with mason
@@ -84,22 +110,31 @@ return {
         -- end,
         -- Specify * to use this function as a fallback for any server
         -- ["*"] = function(server, opts) end,
+        ruff_lsp = function()
+          require("util").on_attach(function(client, _)
+            if client.name == "ruff_lsp" then
+              -- Disable hover in favor of pylsp
+              client.server_capabilities.hoverProvider = false
+            end
+          end)
+        end,
       },
     },
     ---@param opts PluginLspOpts
     config = function(_, opts)
-      -- local Util = require("util")
+      local Util = require("util")
 
-      -- if Util.has("neoconf.nvim") then
-      --   local plugin = require("lazy.core.config").spec.plugins["neoconf.nvim"]
-      --   require("neoconf").setup(require("lazy.core.plugin").values(plugin, "opts", false))
-      -- end
+      if Util.has("neoconf.nvim") then
+        local plugin = require("lazy.core.config").spec.plugins["neoconf.nvim"]
+        require("neoconf").setup(require("lazy.core.plugin").values(plugin, "opts", false))
+      end
+
       -- setup autoformat
       require("plugins.lsp.format").setup(opts)
       -- setup formatting and keymaps
-      -- Util.on_attach(function(client, buffer)
-      --   require("plugins.lsp.keymaps").on_attach(client, buffer)
-      -- end)
+      Util.on_attach(function(client, buffer)
+        require("plugins.lsp.keymaps").on_attach(client, buffer)
+      end)
 
       local register_capability = vim.lsp.handlers["client/registerCapability"]
 
@@ -121,13 +156,13 @@ return {
 
       local inlay_hint = vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint
 
-      -- if opts.inlay_hints.enabled and inlay_hint then
-      --   Util.on_attach(function(client, buffer)
-      --     if client.supports_method("textDocument/inlayHint") then
-      --       inlay_hint(buffer, true)
-      --     end
-      --   end)
-      -- end
+      if opts.inlay_hints.enabled and inlay_hint then
+        Util.on_attach(function(client, buffer)
+          if client.supports_method("textDocument/inlayHint") then
+            inlay_hint(buffer, true)
+          end
+        end)
+      end
 
       if type(opts.diagnostics.virtual_text) == "table" and opts.diagnostics.virtual_text.prefix == "icons" then
         opts.diagnostics.virtual_text.prefix = vim.fn.has("nvim-0.10.0") == 0 and "●"
@@ -170,7 +205,7 @@ return {
         require("lspconfig")[server].setup(server_opts)
       end
 
-      -- get all the servers that are available thourgh mason-lspconfig
+      -- get all the servers that are available through mason-lspconfig
       local have_mason, mlsp = pcall(require, "mason-lspconfig")
       local all_mslp_servers = {}
       if have_mason then
@@ -194,66 +229,12 @@ return {
         mlsp.setup({ ensure_installed = ensure_installed, handlers = { setup } })
       end
 
-      -- if Util.lsp_get_config("denols") and Util.lsp_get_config("tsserver") then
-      --   local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
-      --   Util.lsp_disable("tsserver", is_deno)
-      --   Util.lsp_disable("denols", function(root_dir)
-      --     return not is_deno(root_dir)
-      --   end)
-      -- end
-    end,
-  },
-
-  -- formatters
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = { "mason.nvim" },
-    opts = function()
-      local nls = require("null-ls")
-      return {
-        root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
-        sources = {
-          nls.builtins.formatting.fish_indent,
-          nls.builtins.diagnostics.fish,
-          nls.builtins.formatting.stylua,
-          nls.builtins.formatting.shfmt,
-          -- nls.builtins.diagnostics.flake8,
-        },
-      }
-    end,
-  },
-
-  -- cmdline tools and lsp servers
-  {
-
-    "williamboman/mason.nvim",
-    cmd = "Mason",
-    keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
-    build = ":MasonUpdate",
-    opts = {
-      ensure_installed = {
-        "stylua",
-        "shfmt",
-        -- "flake8",
-      },
-    },
-    ---@param opts MasonSettings | {ensure_installed: string[]}
-    config = function(_, opts)
-      require("mason").setup(opts)
-      local mr = require("mason-registry")
-      local function ensure_installed()
-        for _, tool in ipairs(opts.ensure_installed) do
-          local p = mr.get_package(tool)
-          if not p:is_installed() then
-            p:install()
-          end
-        end
-      end
-      if mr.refresh then
-        mr.refresh(ensure_installed)
-      else
-        ensure_installed()
+      if Util.lsp_get_config("denols") and Util.lsp_get_config("tsserver") then
+        local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
+        Util.lsp_disable("tsserver", is_deno)
+        Util.lsp_disable("denols", function(root_dir)
+          return not is_deno(root_dir)
+        end)
       end
     end,
   },

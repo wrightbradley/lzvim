@@ -1,3 +1,6 @@
+if true then
+  return {}
+end
 return {
   -- lsp symbol navigation for lualine. This shows where
   -- in the code structure you are - within functions, classes,

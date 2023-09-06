@@ -6,7 +6,7 @@ Neovim init file
 
 -- Import Lua modules
 require("config.lazy")
-require("config.init")
+-- require("config.init")
 
 --   {
 --     -- Adds git related signs to the gutter, as well as utilities for managing changes

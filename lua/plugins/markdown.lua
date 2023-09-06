@@ -1,3 +1,6 @@
+if true then
+  return {}
+end
 return {
   -- You must install glow globally
   -- https://github.com/charmbracelet/glow

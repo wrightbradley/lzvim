@@ -27,7 +27,7 @@ opt.spelllang = { "en" }
 -- Neovim UI
 -----------------------------------------------------------
 opt.number = true -- Show line number
-opt.showmatch = true -- Highlight matching parenthesis
+opt.showmatch = false -- Highlight matching parenthesis
 opt.foldmethod = "marker" -- Enable folding (default 'foldmarker')
 -- opt.foldmethod = "expr"
 -- opt.foldexpr = "nvim_treesitter#foldexpr()"

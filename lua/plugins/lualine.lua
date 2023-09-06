@@ -62,6 +62,18 @@ return {
                 removed = icons.git.removed,
               },
             },
+            {
+              function()
+                return require("yaml-companion").get_buf_schema(0)
+              end,
+              cond = function()
+                local schema = require("yaml-companion").get_buf_schema(0)
+                if schema.result[1].name == "none" then
+                  return ""
+                end
+                return schema.result[1].name
+              end,
+            },
           },
           lualine_y = {
             { "progress", separator = " ", padding = { left = 1, right = 0 } },

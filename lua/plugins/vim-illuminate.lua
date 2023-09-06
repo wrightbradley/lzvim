@@ -1,3 +1,6 @@
+if true then
+  return {}
+end
 return {
   -- Automatically highlights other instances of the word under your cursor.
   -- This works with LSP, Treesitter, and regexp matching to find the other
