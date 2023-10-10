@@ -1,6 +1,7 @@
 return {
   {
     "jackMort/ChatGPT.nvim",
+    commit = "d4aa4d9e31d620a0c01006e59f4449ffc7eb33ce",
     event = "VeryLazy",
     config = function()
       local home = vim.fn.expand("$HOME")
