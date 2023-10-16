@@ -150,12 +150,12 @@ autocmd("Filetype", {
 })
 
 -- set helm filetype
-vim.api.nvim_create_autocmd("BufRead,BufNewFile", {
-  group = augroup("helm filetype"),
-  pattern = "*/templates/*.yaml,*/templates/*.tpl,helmfile*.yaml,*/templates/*/*.yaml",
-  callback = function()
-    vim.bo.filetype = "helm"
-    vim.bo.commentstring = "{{/* %s */}}"
-    vim.cmd("LspStop yamlls")
-  end,
-})
+-- vim.api.nvim_create_autocmd("BufRead,BufNewFile", {
+--   group = augroup("helm filetype"),
+--   pattern = "*/templates/*.yaml,*/templates/*.tpl,helmfile*.yaml,*/templates/*/*.yaml",
+--   callback = function()
+--     vim.bo.filetype = "helm"
+--     vim.bo.commentstring = "{{/* %s */}}"
+--     vim.cmd("LspStop yamlls")
+--   end,
+-- })
