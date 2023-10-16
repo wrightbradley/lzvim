@@ -18,17 +18,17 @@
 --   end,
 -- })
 
-local function augroup(name)
-  return vim.api.nvim_create_augroup("helm_syntax" .. name, { clear = true })
-end
-
--- set helm filetype
-vim.api.nvim_create_autocmd("BufRead,BufNewFile", {
-  group = augroup("helm filetype"),
-  pattern = "*/templates/*.yaml,*/templates/*.tpl,helmfile*.yaml,*/templates/*/*.yaml",
-  callback = function()
-    vim.bo.filetype = "helm"
-    vim.bo.commentstring = "{{/* %s */}}"
-    vim.cmd("LspStop yamlls")
-  end,
-})
+-- local function augroup(name)
+--   return vim.api.nvim_create_augroup("helm_syntax" .. name, { clear = true })
+-- end
+--
+-- -- set helm filetype
+-- vim.api.nvim_create_autocmd("BufRead,BufNewFile", {
+--   group = augroup("helm filetype"),
+--   pattern = "*/templates/*.yaml,*/templates/*.tpl,helmfile*.yaml,*/templates/*/*.yaml",
+--   callback = function()
+--     vim.bo.filetype = "helm"
+--     vim.bo.commentstring = "{{/* %s */}}"
+--     vim.cmd("LspStop yamlls")
+--   end,
+-- })
