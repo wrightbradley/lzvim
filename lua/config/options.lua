@@ -3,6 +3,7 @@
 -- Add any additional options here
 local opt = vim.opt
 opt.clipboard = ""
+opt.colorcolumn = "80"
 -- opt.foldmethod = "expr"
 -- opt.foldexpr = "nvim_treesitter#foldexpr()"
 -- opt.foldenable = false
