@@ -13,3 +13,15 @@ env
 Jira
 CloudOps
 PagerDuty
+config
+yaml
+repo
+OKR
+mkdocs
+tustomize
+xargs
+CircleCI
+tustomization
+py
+scaffolder
+Okta
