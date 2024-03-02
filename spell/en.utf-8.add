@@ -35,3 +35,5 @@ gsed
 Makefile
 ADRs
 Autobot
+Kubernetes
+APIs
