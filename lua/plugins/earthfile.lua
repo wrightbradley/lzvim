@@ -1,5 +1,0 @@
-return {
-  {
-    "earthly/earthly.vim"
-  },
-}
