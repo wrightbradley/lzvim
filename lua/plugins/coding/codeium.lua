@@ -13,6 +13,9 @@ return {
     },
     ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
+      -- vim.api.nvim_out_write("This message will be printed to the message area.\n")
+      -- vim.api.nvim_out_write(opts)
+      -- opts.sources = opts.sources or {}
       table.insert(opts.sources, 1, {
         name = "codeium",
         group_index = 1,

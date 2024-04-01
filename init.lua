@@ -98,6 +98,9 @@ require("config.options")
 -- require("config.lazy")
 require("lazy").setup({
   spec = {
+    { import = "plugins.core.coding" },
+    { import = "plugins.core.editor" },
+    { import = "plugins.core.ui" },
     { import = "plugins.coding" },
     { import = "plugins.colorscheme" },
     -- { import = "plugins.dap" },
