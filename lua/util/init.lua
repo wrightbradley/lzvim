@@ -7,6 +7,7 @@ local LazyUtil = require("lazy.core.util")
 ---@field root util.root
 ---@field telescope util.telescope
 ---@field terminal util.terminal
+---@field lazygit util.lazygit
 ---@field toggle util.toggle
 ---@field format util.format
 ---@field plugin util.plugin
