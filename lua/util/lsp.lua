@@ -87,10 +87,10 @@ function M.formatter(opts)
     primary = true,
     priority = 1,
     format = function(buf)
-      M.format(Util.merge(filter, { bufnr = buf }))
+      M.format(Util.merge({}, filter, { bufnr = buf }))
     end,
     sources = function(buf)
-      local clients = M.get_clients(Util.merge(filter, { bufnr = buf }))
+      local clients = M.get_clients(Util.merge({}, filter, { bufnr = buf }))
       ---@param client lsp.Client
       local ret = vim.tbl_filter(function(client)
         return client.supports_method("textDocument/formatting")
@@ -109,13 +109,18 @@ end
 
 ---@param opts? lsp.Client.format
 function M.format(opts)
-  opts = vim.tbl_deep_extend("force", {}, opts or {}, require("util").opts("nvim-lspconfig").format or {})
+  opts = vim.tbl_deep_extend(
+    "force",
+    {},
+    opts or {},
+    Util.opts("nvim-lspconfig").format or {},
+    Util.opts("conform.nvim").format or {}
+  )
   local ok, conform = pcall(require, "conform")
   -- use conform for formatting with LSP when available,
   -- since it has better format diffing
   if ok then
     opts.formatters = {}
-    opts.lsp_fallback = true
     conform.format(opts)
   else
     vim.lsp.buf.format(opts)
