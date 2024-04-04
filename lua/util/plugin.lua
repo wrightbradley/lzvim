@@ -23,7 +23,7 @@ M.renames = {
 }
 
 function M.setup()
-  M.fix_imports()
+  -- M.fix_imports()
   M.fix_renames()
   M.lazy_file()
   table.insert(package.loaders, function(module)

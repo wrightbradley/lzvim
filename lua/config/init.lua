@@ -179,7 +179,6 @@ function M.setup(opts)
       M.load("keymaps")
 
       Util.format.setup()
-      Util.news.setup()
       Util.root.setup()
 
       vim.api.nvim_create_user_command("LazyExtras", function()
@@ -193,7 +192,7 @@ function M.setup(opts)
     end,
   })
 
-  Util.track("colorscheme")
+  -- Util.track("colorscheme")
   Util.try(function()
     if type(M.colorscheme) == "function" then
       M.colorscheme()
@@ -207,7 +206,7 @@ function M.setup(opts)
       vim.cmd.colorscheme("habamax")
     end,
   })
-  Util.track()
+  -- Util.track()
 end
 
 ---@param buf? number
@@ -253,13 +252,13 @@ function M.init()
     return
   end
   M.did_init = true
-  local plugin = require("lazy.core.config").spec.plugins.LazyVim
-  if plugin then
-    vim.opt.rtp:append(plugin.dir)
-  end
+  -- local plugin = require("lazy.core.config").spec.plugins.LazyVim
+  -- if plugin then
+  --   vim.opt.rtp:append(plugin.dir)
+  -- end
 
-  package.preload["plugins.lsp.format"] = function()
-    Util.deprecate([[require("plugins.lsp.format")]], [[require("util").format]])
+  package.preload["plugins.formatting"] = function()
+    -- Util.deprecate([[require("plugins.lsp.format")]], [[require("util").format]])
     return Util.format
   end
 
@@ -273,6 +272,7 @@ function M.init()
 
   Util.plugin.setup()
   M.json.load()
+  M.setup()
 end
 
 setmetatable(M, {

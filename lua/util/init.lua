@@ -1,6 +1,7 @@
 local LazyUtil = require("lazy.core.util")
 
 ---@class util: LazyUtilCore
+---@field config LazyVimConfig
 ---@field ui util.ui
 ---@field lsp util.lsp
 ---@field root util.root
@@ -11,7 +12,7 @@ local LazyUtil = require("lazy.core.util")
 ---@field plugin util.plugin
 ---@field extras util.extras
 ---@field inject util.inject
----@field news util.news
+-- ---@field news util.news
 ---@field json util.json
 ---@field lualine util.lualine
 local M = {}
@@ -38,7 +39,7 @@ setmetatable(M, {
     if dep then
       local mod = type(dep) == "table" and dep[1] or dep
       local key = type(dep) == "table" and dep[2] or k
-      M.deprecate([[require("util").]] .. k, [[require("util").]] .. mod .. "." .. key)
+      M.deprecate([[Util.]] .. k, [[Util.]] .. mod .. "." .. key)
       ---@diagnostic disable-next-line: no-unknown
       t[mod] = require("util." .. mod) -- load here to prevent loops
       return t[mod][key]
@@ -50,7 +51,7 @@ setmetatable(M, {
 })
 
 function M.is_win()
-  return vim.loop.os_uname().sysname:find("Windows") ~= nil
+  return vim.uv.os_uname().sysname:find("Windows") ~= nil
 end
 
 ---@param plugin string
@@ -97,9 +98,10 @@ function M.lazy_notify()
   local orig = vim.notify
   vim.notify = temp
 
+  -- local timer = vim.uv.new_timer()
+  -- local check = assert(vim.uv.new_check())
   local timer = vim.loop.new_timer()
   local check = assert(vim.loop.new_check())
-
   local replay = function()
     timer:stop()
     check:stop()
