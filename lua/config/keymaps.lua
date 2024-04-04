@@ -135,9 +135,9 @@ map("n", "[q", vim.cmd.cprev, { desc = "Previous quickfix" })
 map("n", "]q", vim.cmd.cnext, { desc = "Next quickfix" })
 
 -- formatting
--- map({ "n", "v" }, "<leader>cf", function()
---   Util.format({ force = true })
--- end, { desc = "Format" })
+map({ "n", "v" }, "<leader>cf", function()
+  Util.format({ force = true })
+end, { desc = "Format" })
 
 -- Diagnostic keymaps
 local diagnostic_goto = function(next, severity)
