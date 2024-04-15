@@ -46,7 +46,7 @@ return {
     cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
     keys = {
       { "<c-space>", desc = "Increment selection" },
-      { "<bs>", desc = "Decrement selection", mode = "x" },
+      { "<bs>",      desc = "Decrement selection", mode = "x" },
     },
     ---@type TSConfig
     ---@diagnostic disable-next-line: missing-fields
@@ -54,7 +54,6 @@ return {
       highlight = { enable = true },
       indent = { enable = true },
       ensure_installed = {
-        "bash",
         "c",
         "diff",
         "html",
@@ -65,9 +64,6 @@ return {
         "lua",
         "luadoc",
         "luap",
-        "markdown",
-        "markdown_inline",
-        "python",
         "query",
         "regex",
         "toml",
@@ -75,7 +71,6 @@ return {
         "typescript",
         "vim",
         "vimdoc",
-        "yaml",
       },
       incremental_selection = {
         enable = true,
