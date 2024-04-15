@@ -1,5 +1,4 @@
 -- Flash Telescope config
--- --local Util = require("util")
 return {
   {
     "nvim-telescope/telescope.nvim",
