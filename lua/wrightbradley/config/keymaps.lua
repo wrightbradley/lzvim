@@ -3,7 +3,7 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 
 -- This file is automatically loaded by config.init
-local Util = require("wrightbradley.util")
+-- local Util = require("wrightbradley.util")
 
 -- local function map(mode, lhs, rhs, opts)
 --   local keys = require("lazy.core.handler").handlers.keys

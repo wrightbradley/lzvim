@@ -1,7 +1,9 @@
-local Util = require("wrightbradley.util")
+_G.Util = require("wrightbradley.util")
 
 ---@class LazyVimConfig: LazyVimOptions
 local M = {}
+
+Util.config = M
 
 ---@class LazyVimOptions
 local defaults = {
@@ -10,12 +12,13 @@ local defaults = {
   colorscheme = function()
     require("tokyonight").load()
   end,
+  -- TODO: remove defaults if not needed
   -- load the default settings
   defaults = {
-    autocmds = true, -- config.autocmds
-    keymaps = true, -- config.keymaps
-    -- config.options can't be configured here since that's loaded before lazyvim setup
-    -- if you want to disable loading options, add `package.loaded["config.options"] = true` to the top of your init.lua
+    autocmds = true, -- wrightbradley.config.autocmds
+    keymaps = true, -- wrightbradley.config.keymaps
+    -- lazyvim.config.options can't be configured here since that's loaded before lazyvim setup
+    -- if you want to disable loading options, add `package.loaded["lazyvim.config.options"] = true` to the top of your init.lua
   },
   -- icons used by other plugins
   -- stylua: ignore
@@ -122,7 +125,7 @@ local defaults = {
 }
 
 M.json = {
-  version = 2,
+  version = 3,
   data = {
     version = nil, ---@type string?
     news = {}, ---@type table<string, string>
@@ -159,7 +162,7 @@ function M.setup(opts)
     M.load("autocmds")
   end
 
-  local group = vim.api.nvim_create_augroup("LazyVim", { clear = true })
+  local group = vim.api.nvim_create_augroup("Util", { clear = true })
   vim.api.nvim_create_autocmd("User", {
     group = group,
     pattern = "VeryLazy",
@@ -207,6 +210,9 @@ function M.get_kind_filter(buf)
   if M.kind_filter[ft] == false then
     return
   end
+  if type(M.kind_filter[ft]) == "table" then
+    return M.kind_filter[ft]
+  end
   ---@diagnostic disable-next-line: return-type-mismatch
   return type(M.kind_filter) == "table" and type(M.kind_filter.default) == "table" and M.kind_filter.default or nil
 end
@@ -220,12 +226,12 @@ function M.load(name)
       end, { msg = "Failed loading " .. mod })
     end
   end
-  _load("config." .. name)
+  _load("wrightbradley.config." .. name)
   if vim.bo.filetype == "lazy" then
     -- HACK: LazyVim may have overwritten options of the Lazy ui, so reset this here
     vim.cmd([[do VimResized]])
   end
-  local pattern = "LazyVim" .. name:sub(1, 1):upper() .. name:sub(2)
+  local pattern = "Util" .. name:sub(1, 1):upper() .. name:sub(2)
   vim.api.nvim_exec_autocmds("User", { pattern = pattern, modeline = false })
 end
 
@@ -237,7 +243,7 @@ function M.init()
   M.did_init = true
 
   -- delay notifications till vim.notify was replaced or after 500ms
-  require("util").lazy_notify()
+  Util.lazy_notify()
 
   -- load options here, before lazy init while sourcing plugin modules
   -- this is needed to make sure options will be correctly applied

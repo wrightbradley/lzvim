@@ -1,4 +1,4 @@
---local Util = require("util")
+local Util = require("wrightbradley.util")
 
 ---@class util.format
 ---@overload fun(opts?: {force?:boolean})
