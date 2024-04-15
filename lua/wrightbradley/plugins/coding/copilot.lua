@@ -3,7 +3,6 @@ if true then
 end
 -- copilot suggestions and completion
 return {
-
   -- copilot
   {
     "zbirenbaum/copilot.lua",
@@ -23,7 +22,6 @@ return {
     optional = true,
     event = "VeryLazy",
     opts = function(_, opts)
-      --local Util = require("util")
       local colors = {
         [""] = Util.ui.fg("Special"),
         ["Normal"] = Util.ui.fg("Special"),
@@ -32,7 +30,7 @@ return {
       }
       table.insert(opts.sections.lualine_x, 2, {
         function()
-          local icon = require("config").icons.kinds.Copilot
+          local icon = require("wrightbradley.config").icons.kinds.Copilot
           local status = require("copilot.api").status.data
           return icon .. (status.message or "")
         end,
@@ -40,7 +38,7 @@ return {
           if not package.loaded["copilot"] then
             return
           end
-          local ok, clients = pcall(require("util").lsp.get_clients, { name = "copilot", bufnr = 0 })
+          local ok, clients = pcall(Util.lsp.get_clients, { name = "copilot", bufnr = 0 })
           if not ok then
             return false
           end
@@ -70,7 +68,7 @@ return {
           copilot_cmp.setup(opts)
           -- attach cmp source whenever copilot attaches
           -- fixes lazy-loading issues with the copilot cmp source
-          require("util").lsp.on_attach(function(client)
+          Util.lsp.on_attach(function(client)
             if client.name == "copilot" then
               copilot_cmp._on_insert_enter({})
             end
