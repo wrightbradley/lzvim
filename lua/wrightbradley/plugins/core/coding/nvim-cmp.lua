@@ -52,7 +52,7 @@ return {
         }),
         formatting = {
           format = function(_, item)
-            local icons = require("config").icons.kinds
+            local icons = require("wrightbradley.config").icons.kinds
             if icons[item.kind] then
               item.kind = icons[item.kind] .. item.kind
             end
