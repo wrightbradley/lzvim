@@ -1,6 +1,4 @@
-local Util = require("wrightbradley.util")
-
----@class util.format
+---@class wrightbradley.util.format
 ---@overload fun(opts?: {force?:boolean})
 local M = setmetatable({}, {
   __call = function(m, ...)
@@ -127,7 +125,7 @@ function M.format(opts)
   end
 
   if not done and opts and opts.force then
-    Util.warn("No formatter available", { title = "LazyVim" })
+    Util.warn("No formatter available", { title = "Util" })
   end
 end
 
