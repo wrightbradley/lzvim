@@ -9,6 +9,8 @@ return {
     opts = {
       ensure_installed = {
         "stylua",
+        "circleci-yaml-language-server",
+        "editorconfig-checker",
       },
       ui = {
         icons = {
