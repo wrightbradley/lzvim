@@ -1,5 +1,4 @@
 return {
-
   -- Extend auto completion
   {
     "hrsh7th/nvim-cmp",
@@ -137,7 +136,7 @@ return {
       },
       setup = {
         rust_analyzer = function(_, opts)
-          -- local rust_tools_opts = require("util").opts("rust-tools.nvim")
+          local rust_tools_opts = Util.opts("rust-tools.nvim")
           require("rust-tools").setup(vim.tbl_deep_extend("force", rust_tools_opts or {}, { server = opts }))
           return true
         end,
