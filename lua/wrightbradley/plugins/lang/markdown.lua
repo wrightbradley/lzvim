@@ -11,7 +11,7 @@ return {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       opts.ensure_installed = opts.ensure_installed or {}
-      vim.list_extend(opts.ensure_installed, { "markdownlint", "marksman" })
+      vim.list_extend(opts.ensure_installed, { "markdownlint", "marksman", "vale-ls", "vale" })
     end,
   },
   {
@@ -29,7 +29,7 @@ return {
     optional = true,
     opts = {
       linters_by_ft = {
-        markdown = { "markdownlint" },
+        markdown = { "markdownlint", "vale" },
       },
     },
   },
@@ -38,6 +38,7 @@ return {
     opts = {
       servers = {
         marksman = {},
+        vale_ls = {},
       },
     },
   },
