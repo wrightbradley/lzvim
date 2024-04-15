@@ -9,9 +9,14 @@ return {
     opts = {
       ensure_installed = {
         "stylua",
-        "shfmt",
-        -- "flake8",
       },
+      ui = {
+        icons = {
+          package_installed = "✓",
+          package_pending = "➜",
+          package_uninstalled = "✗"
+        }
+      }
     },
     ---@param opts MasonSettings | {ensure_installed: string[]}
     config = function(_, opts)
