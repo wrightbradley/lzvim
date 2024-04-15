@@ -106,6 +106,7 @@ require("lazy").setup({
     { import = "wrightbradley.plugins.core.coding" },
     { import = "wrightbradley.plugins.coding" },
     { import = "wrightbradley.plugins.colorscheme" },
+    { import = "wrightbradley.plugins.dap" },
     { import = "wrightbradley.plugins.editor" },
     { import = "wrightbradley.plugins.formatting" },
     { import = "wrightbradley.plugins.linting" },
