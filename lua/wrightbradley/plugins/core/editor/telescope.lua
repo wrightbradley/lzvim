@@ -1,4 +1,3 @@
-----local Util = require("util")
 return {
   -- Fuzzy finder.
   -- The default key bindings to find files will use Telescope's
@@ -14,19 +13,19 @@ return {
         build = vim.fn.executable("make") == 1 and "make"
           or "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
         enabled = vim.fn.executable("make") == 1 or vim.fn.executable("cmake") == 1,
-        -- config = function()
-        --   Util.on_load("telescope.nvim", function()
-        --     require("telescope").load_extension("fzf")
-        --   end)
-        -- end,
+        config = function()
+          Util.on_load("telescope.nvim", function()
+            require("telescope").load_extension("fzf")
+          end)
+        end,
       },
       {
         "debugloop/telescope-undo.nvim",
-        -- config = function()
-        --   Util.on_load("telescope.nvim", function()
-        --     require("telescope").load_extension("undo")
-        --   end)
-        -- end,
+        config = function()
+          Util.on_load("telescope.nvim", function()
+            require("telescope").load_extension("undo")
+          end)
+        end,
       },
     },
     keys = {
@@ -35,17 +34,17 @@ return {
         "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>",
         desc = "Switch Buffer",
       },
-      -- { "<leader>/", Util.telescope("live_grep"), desc = "Grep (Root Dir)" },
+      { "<leader>/", Util.telescope("live_grep"), desc = "Grep (Root Dir)" },
       { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
-      -- { "<leader><space>", Util.telescope("files"), desc = "Find Files (Root Dir)" },
+      { "<leader><space>", Util.telescope("files"), desc = "Find Files (Root Dir)" },
       -- find
       { "<leader>fb", "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>", desc = "Buffers" },
-      -- { "<leader>fc", Util.telescope.config_files(), desc = "Find Config File" },
-      -- { "<leader>ff", Util.telescope("files"), desc = "Find Files (Root Dir)" },
-      -- { "<leader>fF", Util.telescope("files", { cwd = false }), desc = "Find Files (cwd)" },
+      { "<leader>fc", Util.telescope.config_files(), desc = "Find Config File" },
+      { "<leader>ff", Util.telescope("files"), desc = "Find Files (Root Dir)" },
+      { "<leader>fF", Util.telescope("files", { cwd = false }), desc = "Find Files (cwd)" },
       { "<leader>fg", "<cmd>Telescope git_files<cr>", desc = "Find Files (git-files)" },
       { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
-      -- { "<leader>fR", Util.telescope("oldfiles", { cwd = vim.uv.cwd() }), desc = "Recent (cwd)" },
+      { "<leader>fR", Util.telescope("oldfiles", { cwd = vim.uv.cwd() }), desc = "Recent (cwd)" },
       -- git
       { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "Commits" },
       { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "Status" },
@@ -57,8 +56,8 @@ return {
       { "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands" },
       { "<leader>sd", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Document Diagnostics" },
       { "<leader>sD", "<cmd>Telescope diagnostics<cr>", desc = "Workspace Diagnostics" },
-      -- { "<leader>sg", Util.telescope("live_grep"), desc = "Grep (Root Dir)" },
-      -- { "<leader>sG", Util.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
+      { "<leader>sg", Util.telescope("live_grep"), desc = "Grep (Root Dir)" },
+      { "<leader>sG", Util.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
       { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
       { "<leader>sH", "<cmd>Telescope highlights<cr>", desc = "Search Highlight Groups" },
       { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Key Maps" },
@@ -66,18 +65,18 @@ return {
       { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
       { "<leader>so", "<cmd>Telescope vim_options<cr>", desc = "Options" },
       { "<leader>sR", "<cmd>Telescope resume<cr>", desc = "Resume" },
-      -- { "<leader>sw", Util.telescope("grep_string", { word_match = "-w" }), desc = "Word (Root Dir)" },
-      -- { "<leader>sW", Util.telescope("grep_string", { cwd = false, word_match = "-w" }), desc = "Word (cwd)" },
-      -- { "<leader>sw", Util.telescope("grep_string"), mode = "v", desc = "Selection (Root Dir)" },
-      -- { "<leader>sW", Util.telescope("grep_string", { cwd = false }), mode = "v", desc = "Selection (cwd)" },
-      -- { "<leader>uC", Util.telescope("colorscheme", { enable_preview = true }), desc = "Colorscheme with Preview" },
+      { "<leader>sw", Util.telescope("grep_string", { word_match = "-w" }), desc = "Word (Root Dir)" },
+      { "<leader>sW", Util.telescope("grep_string", { cwd = false, word_match = "-w" }), desc = "Word (cwd)" },
+      { "<leader>sw", Util.telescope("grep_string"), mode = "v", desc = "Selection (Root Dir)" },
+      { "<leader>sW", Util.telescope("grep_string", { cwd = false }), mode = "v", desc = "Selection (cwd)" },
+      { "<leader>uC", Util.telescope("colorscheme", { enable_preview = true }), desc = "Colorscheme with Preview" },
       -- add a keymap to change yaml schema
       { "<leader>sy", "<cmd>Telescope yaml_schema<cr>", desc = "Select YAML schema" },
       {
         "<leader>ss",
         function()
           require("telescope.builtin").lsp_document_symbols({
-            symbols = require("lazyvim.config").get_kind_filter(),
+            symbols = require("wrightbradley.config").get_kind_filter(),
           })
         end,
         desc = "Goto Symbol",
@@ -86,7 +85,7 @@ return {
         "<leader>sS",
         function()
           require("telescope.builtin").lsp_dynamic_workspace_symbols({
-            symbols = require("lazyvim.config").get_kind_filter(),
+            symbols = require("wrightbradley.config").get_kind_filter(),
           })
         end,
         desc = "Goto Symbol (Workspace)",
@@ -104,12 +103,12 @@ return {
       local find_files_no_ignore = function()
         local action_state = require("telescope.actions.state")
         local line = action_state.get_current_line()
-        -- Util.telescope("find_files", { no_ignore = true, default_text = line })()
+        Util.telescope("find_files", { no_ignore = true, default_text = line })()
       end
       local find_files_with_hidden = function()
         local action_state = require("telescope.actions.state")
         local line = action_state.get_current_line()
-        -- Util.telescope("find_files", { hidden = true, default_text = line })()
+        Util.telescope("find_files", { hidden = true, default_text = line })()
       end
 
       return {
