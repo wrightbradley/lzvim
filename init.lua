@@ -89,6 +89,31 @@ P.S. You can delete this when you're done too. It's your config now! :)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-require("wrightbradley.lazy")
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  -- bootstrap lazy.nvim
+  -- stylua: ignore
+  vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath })
+end
+vim.opt.rtp:prepend(lazypath)
+
+-- Plugins setup
+require("lazy").setup({
+  spec = {
+    { import = "wrightbradley.plugins" },
+    { import = "wrightbradley.plugins.core.editor" },
+    { import = "wrightbradley.plugins.core.ui" },
+    { import = "wrightbradley.plugins.core.coding" },
+    { import = "wrightbradley.plugins.coding" },
+    { import = "wrightbradley.plugins.colorscheme" },
+    { import = "wrightbradley.plugins.editor" },
+    { import = "wrightbradley.plugins.formatting" },
+    { import = "wrightbradley.plugins.linting" },
+    { import = "wrightbradley.plugins.lsp" },
+    { import = "wrightbradley.plugins.ui" },
+    { import = "wrightbradley.plugins.utilities" },
+    { import = "wrightbradley.plugins.lang" },
+  },
+})
 -- Setup the custom configuration for NeoVim
-require("config").setup()
+require("wrightbradley.config").setup()
