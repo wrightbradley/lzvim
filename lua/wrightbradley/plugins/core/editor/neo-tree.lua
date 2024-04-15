@@ -1,4 +1,3 @@
--- --local Util = require("util")
 return {
   -- file explorer
   {
@@ -6,13 +5,13 @@ return {
     branch = "v3.x",
     cmd = "Neotree",
     keys = {
-      -- {
---         "<leader>fe",
---         function()
---           require("neo-tree.command").execute({ toggle = true, dir = Util.root() })
---         end,
---         desc = "Explorer NeoTree (Root Dir)",
---       },
+      {
+        "<leader>fe",
+        function()
+          require("neo-tree.command").execute({ toggle = true, dir = Util.root() })
+        end,
+        desc = "Explorer NeoTree (Root Dir)",
+      },
       {
         "<leader>fE",
         function()
@@ -58,24 +57,24 @@ return {
         use_libuv_file_watcher = true,
       },
       window = {
---         mappings = {
---           ["<space>"] = "none",
---           ["Y"] = {
---             function(state)
---               local node = state.tree:get_node()
---               local path = node:get_id()
---               vim.fn.setreg("+", path, "c")
---             end,
---             desc = "Copy Path to Clipboard",
---           },
---           ["O"] = {
---             function(state)
---               require("util").open(state.tree:get_node().path, { system = true })
---             end,
---             desc = "Open with System Application",
---           },
---         },
---       },
+        mappings = {
+          ["<space>"] = "none",
+          ["Y"] = {
+            function(state)
+              local node = state.tree:get_node()
+              local path = node:get_id()
+              vim.fn.setreg("+", path, "c")
+            end,
+            desc = "Copy Path to Clipboard",
+          },
+          ["O"] = {
+            function(state)
+              Util.open(state.tree:get_node().path, { system = true })
+            end,
+            desc = "Open with System Application",
+          },
+        },
+      },
       default_component_configs = {
         indent = {
           with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
@@ -86,9 +85,9 @@ return {
       },
     },
     config = function(_, opts)
---       local function on_move(data)
---         Util.lsp.on_rename(data.source, data.destination)
---       end
+      local function on_move(data)
+        Util.lsp.on_rename(data.source, data.destination)
+      end
 
       local events = require("neo-tree.events")
       opts.event_handlers = opts.event_handlers or {}
@@ -107,5 +106,4 @@ return {
       })
     end,
   },
-}
 }
