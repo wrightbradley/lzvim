@@ -7,20 +7,20 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-spec = {
-	{ import = "wrightbradley.plugins.core.coding" },
-	{ import = "wrightbradley.plugins.core.editor" },
-	{ import = "wrightbradley.plugins.core.ui" },
-	{ import = "wrightbradley.plugins.coding" },
-	{ import = "wrightbradley.plugins.colorscheme" },
-	{ import = "wrightbradley.plugins.editor" },
-	{ import = "wrightbradley.plugins.formatting" },
-	{ import = "wrightbradley.plugins.lang" },
-	{ import = "wrightbradley.plugins.linting" },
-	{ import = "wrightbradley.plugins.lsp" },
-	{ import = "wrightbradley.plugins.ui" },
-	{ import = "wrightbradley.plugins.utilities" },
-},
+  spec = {
+    { import = "wrightbradley.plugins.core.coding" },
+    { import = "wrightbradley.plugins.core.editor" },
+    { import = "wrightbradley.plugins.core.ui" },
+    { import = "wrightbradley.plugins.coding" },
+    { import = "wrightbradley.plugins.colorscheme" },
+    { import = "wrightbradley.plugins.editor" },
+    { import = "wrightbradley.plugins.formatting" },
+    { import = "wrightbradley.plugins.lang" },
+    { import = "wrightbradley.plugins.linting" },
+    { import = "wrightbradley.plugins.lsp" },
+    { import = "wrightbradley.plugins.ui" },
+    { import = "wrightbradley.plugins.utilities" },
+  },
   defaults = {
     lazy = false, -- should plugins be lazy-loaded?
     version = nil,
