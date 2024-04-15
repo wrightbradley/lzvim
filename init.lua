@@ -84,7 +84,11 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
-require("wrightbradley.config")
-require("wrightbradley.lazy")
-require("wrightbradley.config.after-init")
+-- Set <space> as the leader key
+-- Set this key before plugins are required (otherwise wrong leader will be used)
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
+require("wrightbradley.lazy")
+-- Setup the custom configuration for NeoVim
+require("config").setup()
