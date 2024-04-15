@@ -48,12 +48,12 @@ return {
       },
       setup = {
         ruff_lsp = function()
-          -- require("util").lsp.on_attach(function(client, _)
-          --   if client.name == "ruff_lsp" then
-          --     -- Disable hover in favor of Pyright
-          --     client.server_capabilities.hoverProvider = false
-          --   end
-          -- end)
+          Util.lsp.on_attach(function(client, _)
+            if client.name == "ruff_lsp" then
+              -- Disable hover in favor of Pyright
+              client.server_capabilities.hoverProvider = false
+            end
+          end)
         end,
       },
     },
@@ -94,9 +94,9 @@ return {
     "linux-cultist/venv-selector.nvim",
     cmd = "VenvSelect",
     opts = function(_, opts)
-      -- if require("util").has("nvim-dap-python") then
-      --   opts.dap_enabled = true
-      -- end
+      if Util.has("nvim-dap-python") then
+        opts.dap_enabled = true
+      end
       return vim.tbl_deep_extend("force", opts, {
         name = {
           "venv",
