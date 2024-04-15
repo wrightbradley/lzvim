@@ -1,5 +1,4 @@
 -- lspconfig
--- --local Util = require("util")
 return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPost", "BufWritePost", "BufNewFile" },
@@ -25,14 +24,14 @@ return {
         -- prefix = "icons",
       },
       severity_sort = true,
-      -- signs = {
-      --   text = {
-      --     [vim.diagnostic.severity.ERROR] = require("config").icons.diagnostics.Error,
-      --     [vim.diagnostic.severity.WARN] = require("config").icons.diagnostics.Warn,
-      --     [vim.diagnostic.severity.HINT] = require("config").icons.diagnostics.Hint,
-      --     [vim.diagnostic.severity.INFO] = require("config").icons.diagnostics.Info,
-      --   },
-      -- },
+      signs = {
+        text = {
+          [vim.diagnostic.severity.ERROR] = require("wrightbradley.config").icons.diagnostics.Error,
+          [vim.diagnostic.severity.WARN] = require("wrightbradley.config").icons.diagnostics.Warn,
+          [vim.diagnostic.severity.HINT] = require("wrightbradley.config").icons.diagnostics.Hint,
+          [vim.diagnostic.severity.INFO] = require("wrightbradley.config").icons.diagnostics.Info,
+        },
+      },
     },
     -- Enable this to enable the builtin LSP inlay hints on Neovim >= 0.10.0
     -- Be aware that you also will need to properly configure your LSP server to
@@ -126,18 +125,18 @@ return {
   },
   ---@param opts PluginLspOpts
   config = function(_, opts)
-    -- if Util.has("neoconf.nvim") then
-    --   local plugin = require("lazy.core.config").spec.plugins["neoconf.nvim"]
-    --   require("neoconf").setup(require("lazy.core.plugin").values(plugin, "opts", false))
-    -- end
+    if Util.has("neoconf.nvim") then
+      local plugin = require("lazy.core.config").spec.plugins["neoconf.nvim"]
+      require("neoconf").setup(require("lazy.core.plugin").values(plugin, "opts", false))
+    end
 
     -- setup autoformat
-    -- Util.format.register(Util.lsp.formatter())
+    Util.format.register(Util.lsp.formatter())
 
     -- setup keymaps
-    -- Util.lsp.on_attach(function(client, buffer)
-    --   require("util.lsp-keymaps").on_attach(client, buffer)
-    -- end)
+    Util.lsp.on_attach(function(client, buffer)
+      require("util.lsp-keymaps").on_attach(client, buffer)
+    end)
 
     local register_capability = vim.lsp.handlers["client/registerCapability"]
 
@@ -153,36 +152,36 @@ return {
     end
 
     -- diagnostics signs
-    -- if vim.fn.has("nvim-0.10.0") == 0 then
-    --   for severity, icon in pairs(opts.diagnostics.signs.text) do
-    --     local name = vim.diagnostic.severity[severity]:lower():gsub("^%l", string.upper)
-    --     name = "DiagnosticSign" .. name
-    --     vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
-    --   end
-    -- end
+    if vim.fn.has("nvim-0.10.0") == 0 then
+      for severity, icon in pairs(opts.diagnostics.signs.text) do
+        local name = vim.diagnostic.severity[severity]:lower():gsub("^%l", string.upper)
+        name = "DiagnosticSign" .. name
+        vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
+      end
+    end
 
     -- inlay hints
-    -- if opts.inlay_hints.enabled then
-    --   Util.lsp.on_attach(function(client, buffer)
-    --     if client.supports_method("textDocument/inlayHint") then
-    --       Util.toggle.inlay_hints(buffer, true)
-    --     end
-    --   end)
-    -- end
+    if opts.inlay_hints.enabled then
+      Util.lsp.on_attach(function(client, buffer)
+        if client.supports_method("textDocument/inlayHint") then
+          Util.toggle.inlay_hints(buffer, true)
+        end
+      end)
+    end
 
     -- code lens
-    -- if opts.codelens.enabled and vim.lsp.codelens then
-    --   Util.lsp.on_attach(function(client, buffer)
-    --     if client.supports_method("textDocument/codeLens") then
-    --       vim.lsp.codelens.refresh()
-    --       --- autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh()
-    --       vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
-    --         buffer = buffer,
-    --         callback = vim.lsp.codelens.refresh,
-    --       })
-    --     end
-    --   end)
-    -- end
+    if opts.codelens.enabled and vim.lsp.codelens then
+      Util.lsp.on_attach(function(client, buffer)
+        if client.supports_method("textDocument/codeLens") then
+          vim.lsp.codelens.refresh()
+          --- autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh()
+          vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+            buffer = buffer,
+            callback = vim.lsp.codelens.refresh,
+          })
+        end
+      end)
+    end
 
     if type(opts.diagnostics.virtual_text) == "table" and opts.diagnostics.virtual_text.prefix == "icons" then
       opts.diagnostics.virtual_text.prefix = vim.fn.has("nvim-0.10.0") == 0 and "●"
@@ -249,12 +248,12 @@ return {
       mlsp.setup({ ensure_installed = ensure_installed, handlers = { setup } })
     end
 
-    -- if Util.lsp.get_config("denols") and Util.lsp.get_config("tsserver") then
-    --   local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
-    --   Util.lsp.disable("tsserver", is_deno)
-    --   Util.lsp.disable("denols", function(root_dir)
-    --     return not is_deno(root_dir)
-    --   end)
-    -- end
+    if Util.lsp.get_config("denols") and Util.lsp.get_config("tsserver") then
+      local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
+      Util.lsp.disable("tsserver", is_deno)
+      Util.lsp.disable("denols", function(root_dir)
+        return not is_deno(root_dir)
+      end)
+    end
   end,
 }
