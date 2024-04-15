@@ -14,9 +14,9 @@ return {
         icons = {
           package_installed = "✓",
           package_pending = "➜",
-          package_uninstalled = "✗"
-        }
-      }
+          package_uninstalled = "✗",
+        },
+      },
     },
     ---@param opts MasonSettings | {ensure_installed: string[]}
     config = function(_, opts)
