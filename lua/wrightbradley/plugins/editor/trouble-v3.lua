@@ -1,9 +1,9 @@
+local Config = require("wrightbradley.config")
+
 return {
   {
     "folke/trouble.nvim",
     branch = "dev",
-    cmd = { "TroubleToggle", "Trouble" },
-    opts = { use_diagnostic_signs = true },
     keys = {
       { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" },
       { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)" },
@@ -24,6 +24,10 @@ return {
     optional = true,
     opts = function(_, opts)
       local trouble = require("trouble")
+      if not trouble.statusline then
+        Util.error("You have enabled **trouble-v3**,\nbut still need to update it with `:Lazy`")
+        return
+      end
 
       local symbols = trouble.statusline({
         mode = "symbols",
@@ -32,10 +36,10 @@ return {
         filter = { range = true },
         format = "{kind_icon}{symbol.name:Normal}",
       })
-      -- table.insert(opts.sections.lualine_c, {
-      --  symbols.get,
-      --  cond = symbols.has,
-      -- })
+      table.insert(opts.sections.lualine_c, {
+        symbols.get,
+        cond = symbols.has,
+      })
     end,
   },
 
