@@ -1,21 +1,19 @@
 local LazyUtil = require("lazy.core.util")
 
----@class util: LazyUtilCore
+---@class wrightbradley.util: LazyUtilCore
 ---@field config LazyVimConfig
----@field ui util.ui
----@field lsp util.lsp
----@field root util.root
----@field telescope util.telescope
----@field terminal util.terminal
----@field lazygit util.lazygit
----@field toggle util.toggle
----@field format util.format
----@field plugin util.plugin
----@field extras util.extras
----@field inject util.inject
--- ---@field news util.news
----@field json util.json
----@field lualine util.lualine
+---@field ui wrightbradley.util.ui
+---@field lsp wrightbradley.util.lsp
+---@field root wrightbradley.util.root
+---@field telescope wrightbradley.util.telescope
+---@field terminal wrightbradley.util.terminal
+---@field lazygit wrightbradley.util.lazygit
+---@field toggle wrightbradley.util.toggle
+---@field format wrightbradley.util.format
+---@field plugin wrightbradley.util.plugin
+---@field inject wrightbradley.util.inject
+---@field json wrightbradley.util.json
+---@field lualine wrightbradley.util.lualine
 local M = {}
 
 ---@type table<string, string|string[]>
@@ -42,11 +40,11 @@ setmetatable(M, {
       local key = type(dep) == "table" and dep[2] or k
       M.deprecate([[Util.]] .. k, [[Util.]] .. mod .. "." .. key)
       ---@diagnostic disable-next-line: no-unknown
-      t[mod] = require("util." .. mod) -- load here to prevent loops
+      t[mod] = require("wrightbradley.util." .. mod) -- load here to prevent loops
       return t[mod][key]
     end
     ---@diagnostic disable-next-line: no-unknown
-    t[k] = require("util." .. k)
+    t[k] = require("wrightbradley.util." .. k)
     return t[k]
   end,
 })
@@ -82,7 +80,7 @@ end
 
 function M.deprecate(old, new)
   M.warn(("`%s` is deprecated. Please use `%s` instead"):format(old, new), {
-    title = "LazyVim",
+    title = "Util",
     once = true,
     stacktrace = true,
     stacklevel = 6,
@@ -99,10 +97,9 @@ function M.lazy_notify()
   local orig = vim.notify
   vim.notify = temp
 
-  -- local timer = vim.uv.new_timer()
-  -- local check = assert(vim.uv.new_check())
-  local timer = vim.loop.new_timer()
-  local check = assert(vim.loop.new_check())
+  local timer = vim.uv.new_timer()
+  local check = assert(vim.uv.new_check())
+
   local replay = function()
     timer:stop()
     check:stop()
