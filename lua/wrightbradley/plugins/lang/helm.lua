@@ -9,6 +9,14 @@ Util.lsp.on_attach(function(client, buffer)
 end)
 
 return {
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = function(_, opts)
+      if type(opts.ensure_installed) == "table" then
+        vim.list_extend(opts.ensure_installed, { "helm" })
+      end
+    end,
+  },
   { "towolf/vim-helm", ft = "helm" },
   {
     "neovim/nvim-lspconfig",
