@@ -82,7 +82,6 @@ return {
         ---@type table<string, conform.FormatterUnit[]>
         formatters_by_ft = {
           lua = { "stylua" },
-          fish = { "fish_indent" },
           sh = { "shfmt" },
         },
         -- The options you set here will be merged with the builtin formatters.

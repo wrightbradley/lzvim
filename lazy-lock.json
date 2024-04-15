@@ -67,7 +67,6 @@
   "nvim-web-devicons": { "branch": "master", "commit": "b3468391470034353f0e5110c70babb5c62967d3" },
   "obsidian.nvim": { "branch": "main", "commit": "9644aca08334bb3f6fbeeccacc9e4dbb5855577e" },
   "octo.nvim": { "branch": "master", "commit": "a511b52fbf040f928a24deb72e17ec465613b442" },
-  "omnisharp-extended-lsp.nvim": { "branch": "main", "commit": "6e0aa6465f8fa8ac6c833f6ac4713adfee0202a0" },
   "one-small-step-for-vimkind": { "branch": "main", "commit": "93af151b02d2952977fd3db20b07d2a5d23b60f6" },
   "persistence.nvim": { "branch": "main", "commit": "4982499c1636eac254b72923ab826ee7827b3084" },
   "plenary.nvim": { "branch": "master", "commit": "8aad4396840be7fc42896e3011751b7609ca4119" },
