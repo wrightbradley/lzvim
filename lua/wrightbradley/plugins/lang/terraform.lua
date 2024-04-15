@@ -56,17 +56,17 @@ return {
       {
         "ANGkeith/telescope-terraform-doc.nvim",
         config = function()
-          -- require("util").on_load("telescope.nvim", function()
-          --   require("telescope").load_extension("terraform_doc")
-          -- end)
+          Util.on_load("telescope.nvim", function()
+            require("telescope").load_extension("terraform_doc")
+          end)
         end,
       },
       {
         "cappyzawa/telescope-terraform.nvim",
         config = function()
-          -- require("util").on_load("telescope.nvim", function()
-          --   require("telescope").load_extension("terraform")
-          -- end)
+          Util.on_load("telescope.nvim", function()
+            require("telescope").load_extension("terraform")
+          end)
         end,
       },
     },
