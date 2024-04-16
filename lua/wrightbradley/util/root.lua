@@ -143,7 +143,7 @@ function M.setup()
   end, { desc = "Util roots for the current buffer" })
 
   vim.api.nvim_create_autocmd({ "LspAttach", "BufWritePost", "DirChanged" }, {
-    group = vim.api.nvim_create_augroup("lazyvim_root_cache", { clear = true }),
+    group = vim.api.nvim_create_augroup("wrightbradley_root_cache", { clear = true }),
     callback = function(event)
       M.cache[event.buf] = nil
     end,

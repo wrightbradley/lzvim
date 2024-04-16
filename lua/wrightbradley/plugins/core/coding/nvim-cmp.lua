@@ -10,7 +10,7 @@ return {
       "hrsh7th/cmp-path",
     },
     -- Not all LSP servers add brackets when completing a function.
-    -- To better deal with this, LazyVim adds a custom option to cmp,
+    -- To better deal with this, Util adds a custom option to cmp,
     -- that you can configure. For example:
     --
     -- ```lua

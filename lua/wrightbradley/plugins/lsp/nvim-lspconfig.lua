@@ -49,7 +49,7 @@ return {
       -- add any global capabilities here
       capabilities = {},
       -- options for vim.lsp.buf.format
-      -- `bufnr` and `filter` is handled by the LazyVim formatter,
+      -- `bufnr` and `filter` is handled by the Util formatter,
       -- but can be also overridden when specified
       format = {
         formatting_options = nil,
@@ -153,7 +153,7 @@ return {
       if type(opts.diagnostics.virtual_text) == "table" and opts.diagnostics.virtual_text.prefix == "icons" then
         opts.diagnostics.virtual_text.prefix = vim.fn.has("nvim-0.10.0") == 0 and "●"
           or function(diagnostic)
-            local icons = require("lazyvim.config").icons.diagnostics
+            local icons = require("wrightbradley.config").icons.diagnostics
             for d, icon in pairs(icons) do
               if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
                 return icon
@@ -215,7 +215,7 @@ return {
         mlsp.setup({ ensure_installed = ensure_installed, handlers = { setup } })
       end
 
-      if Util.lsp.get_config("denols") and LazyVim.lsp.get_config("tsserver") then
+      if Util.lsp.get_config("denols") and Util.lsp.get_config("tsserver") then
         local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
         Util.lsp.disable("tsserver", is_deno)
         Util.lsp.disable("denols", function(root_dir)

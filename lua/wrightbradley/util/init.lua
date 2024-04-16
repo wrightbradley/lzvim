@@ -1,7 +1,7 @@
 local LazyUtil = require("lazy.core.util")
 
 ---@class wrightbradley.util: LazyUtilCore
----@field config LazyVimConfig
+---@field config UtilConfig
 ---@field ui wrightbradley.util.ui
 ---@field lsp wrightbradley.util.lsp
 ---@field root wrightbradley.util.root
@@ -12,7 +12,6 @@ local LazyUtil = require("lazy.core.util")
 ---@field format wrightbradley.util.format
 ---@field plugin wrightbradley.util.plugin
 ---@field inject wrightbradley.util.inject
----@field json wrightbradley.util.json
 ---@field lualine wrightbradley.util.lualine
 local M = {}
 

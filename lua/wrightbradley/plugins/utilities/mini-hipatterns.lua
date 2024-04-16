@@ -9,7 +9,7 @@ M.plugin = {
   opts = function()
     local hi = require("mini.hipatterns")
     return {
-      -- custom LazyVim option to enable the tailwind integration
+      -- custom Util option to enable the tailwind integration
       tailwind = {
         enabled = true,
         ft = { "typescriptreact", "javascriptreact", "css", "javascript", "typescript", "html" },

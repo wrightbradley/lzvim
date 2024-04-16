@@ -1,4 +1,4 @@
--- This is what powers LazyVim's fancy-looking
+-- This is what powers Util's fancy-looking
 -- tabs, which include filetype icons and close buttons.
 return {
   {

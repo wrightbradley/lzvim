@@ -1,25 +1,17 @@
 _G.Util = require("wrightbradley.util")
 
----@class LazyVimConfig: LazyVimOptions
+---@class UtilConfig: UtilOptions
 local M = {}
 
 Util.config = M
 
----@class LazyVimOptions
+---@class UtilOptions
 local defaults = {
   -- colorscheme can be a string like `catppuccin` or a function that will load the colorscheme
   ---@type string|fun()
   colorscheme = function()
     require("tokyonight").load()
   end,
-  -- TODO: remove defaults if not needed
-  -- load the default settings
-  defaults = {
-    autocmds = true, -- wrightbradley.config.autocmds
-    keymaps = true, -- wrightbradley.config.keymaps
-    -- lazyvim.config.options can't be configured here since that's loaded before lazyvim setup
-    -- if you want to disable loading options, add `package.loaded["lazyvim.config.options"] = true` to the top of your init.lua
-  },
   -- icons used by other plugins
   -- stylua: ignore
   icons = {
@@ -124,35 +116,10 @@ local defaults = {
   },
 }
 
-M.json = {
-  version = 3,
-  data = {
-    version = nil, ---@type string?
-    news = {}, ---@type table<string, string>
-    extras = {}, ---@type string[]
-  },
-}
-
-function M.json.load()
-  local path = vim.fn.stdpath("config") .. "/lazyvim.json"
-  local f = io.open(path, "r")
-  if f then
-    local data = f:read("*a")
-    f:close()
-    local ok, json = pcall(vim.json.decode, data, { luanil = { object = true, array = true } })
-    if ok then
-      M.json.data = vim.tbl_deep_extend("force", M.json.data, json or {})
-      if M.json.data.version ~= M.json.version then
-        Util.json.migrate()
-      end
-    end
-  end
-end
-
----@type LazyVimOptions
+---@type UtilOptions
 local options
 
----@param opts? LazyVimOptions
+---@param opts? UtilOptions
 function M.setup(opts)
   options = vim.tbl_deep_extend("force", defaults, opts or {}) or {}
 
@@ -228,7 +195,7 @@ function M.load(name)
   end
   _load("wrightbradley.config." .. name)
   if vim.bo.filetype == "lazy" then
-    -- HACK: LazyVim may have overwritten options of the Lazy ui, so reset this here
+    -- HACK: Util may have overwritten options of the Lazy ui, so reset this here
     vim.cmd([[do VimResized]])
   end
   local pattern = "Util" .. name:sub(1, 1):upper() .. name:sub(2)
@@ -251,7 +218,6 @@ function M.init()
   M.load("options")
 
   Util.plugin.setup()
-  M.json.load()
 end
 
 setmetatable(M, {
@@ -259,7 +225,7 @@ setmetatable(M, {
     if options == nil then
       return vim.deepcopy(defaults)[key]
     end
-    ---@cast options LazyVimConfig
+    ---@cast options UtilConfig
     return options[key]
   end,
 })
